@@ -4,7 +4,7 @@ import util.Matrix;
 public class Vector2f {
 	
 	public float x, y;
-	public Matrix rotation;
+	public Matrix rotation = new Matrix(2,2);
 	
 	//common vectors for each multiple of (Math.PI/2) on graph.
 	public static Vector2f right = new Vector2f(1.0f, 0.0f);
@@ -16,7 +16,6 @@ public class Vector2f {
 		this.x = x;
 		this.y = y;
 		this.rotation = rotation;
-		rotation =  new Matrix();
 	}
 	
 	public void scale(float scale, Vector2f model){
@@ -49,9 +48,15 @@ public class Vector2f {
 	
 	public void rotateVector(float angle){
 		rotation.matrix = {
-			{Math.cos(findAngleBetween(this, Vector2f.right)), -Math.sin(findAngleBetween(this, Vector2f.right))},
-			{Math.sin(findAngleBetween(this, Vector2f.right)), Math.cos(findAngleBetween(this, Vector2f.right))}
+			{Math.cos(angle), -Math.sin(angle)},
+			{Math.sin(angle), Math.cos(angle)}
 		};
+		Matrix point = new Matrix(2, 1);
+		point.matrix =  {
+			{this.x},
+			{this.y}
+		};
+		point.multiply(rotation);
 	}
 	//TODO: add the cross product as a method
 	
